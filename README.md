@@ -17,16 +17,13 @@ import ACWKWebVC
 
 ```swift
 let webVC: YourCustomizedWebVC = YourCustomizedWebVC(url: url)
-webVC.overrideUserInterfaceStyle = .dark
-webVC.title = ncTitle
+webVC.title = "navigation title"
 webVC.progressY = 56.0
 webVC.moreButtonEven = {
 }
 webVC.showBottomBar = true
 
 let webNC = UINavigationController(rootViewController: webVC)
-webNC.navigationBar.tintColor = .white
-webNC.overrideUserInterfaceStyle = .dark
 webNC.modalPresentationStyle = .pageSheet
 webNC.modalTransitionStyle = .coverVertical
 webNC.isModalInPresentation = isModalInPresentation

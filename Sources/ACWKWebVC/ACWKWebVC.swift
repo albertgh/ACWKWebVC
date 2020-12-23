@@ -12,6 +12,8 @@ open class ACWKWebVC: UIViewController {
     public static let barContentH: CGFloat = 56.0
     public static let barContentLeftRightSpace: CGFloat = 20.0
 
+    public static let barButtonImageConfig: UIImage.Configuration = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge, weight: ACWKWebVC.barButtonWeight)
+    public static let barButtonWeight: UIImage.SymbolWeight = .light
     public static let barButtonIconEdge: CGFloat = 24.0
     public static let barButtonFullEdge: CGFloat = 44.0
     public static let barButtonGap: CGFloat = 20.0
@@ -51,8 +53,7 @@ open class ACWKWebVC: UIViewController {
     public let backwardButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.backgroundColor = .clear
-        let biConfig = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge)
-        let btnImg = UIImage(systemName: "chevron.left", withConfiguration: biConfig)
+        let btnImg = UIImage(systemName: "chevron.left", withConfiguration: ACWKWebVC.barButtonImageConfig)
         btn.setImage(btnImg, for: .normal)
         btn.isEnabled = false
         return btn
@@ -60,8 +61,7 @@ open class ACWKWebVC: UIViewController {
     public let forwardButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.backgroundColor = .clear
-        let biConfig = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge)
-        let btnImg = UIImage(systemName: "chevron.right", withConfiguration: biConfig)
+        let btnImg = UIImage(systemName: "chevron.right", withConfiguration: ACWKWebVC.barButtonImageConfig)
         btn.setImage(btnImg, for: .normal)
         btn.isEnabled = false
         return btn
@@ -69,16 +69,14 @@ open class ACWKWebVC: UIViewController {
     public let shareButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.backgroundColor = .clear
-        let biConfig = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge)
-        let btnImg = UIImage(systemName: "square.and.arrow.up", withConfiguration: biConfig)
+        let btnImg = UIImage(systemName: "square.and.arrow.up", withConfiguration: ACWKWebVC.barButtonImageConfig)
         btn.setImage(btnImg, for: .normal)
         return btn
     }()
     public let safariButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.backgroundColor = .clear
-        let biConfig = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge)
-        let btnImg = UIImage(systemName: "safari", withConfiguration: biConfig)
+        let btnImg = UIImage(systemName: "safari", withConfiguration: ACWKWebVC.barButtonImageConfig)
         btn.setImage(btnImg, for: .normal)
         return btn
     }()
