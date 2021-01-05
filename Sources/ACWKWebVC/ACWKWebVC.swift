@@ -12,12 +12,6 @@ open class ACWKWebVC: UIViewController {
     public static let barContentH: CGFloat = 56.0
     public static let barContentLeftRightSpace: CGFloat = 20.0
 
-    public static let barButtonImageConfig: UIImage.Configuration = UIImage.SymbolConfiguration(pointSize: ACWKWebVC.barButtonIconEdge, weight: ACWKWebVC.barButtonWeight)
-    public static let barButtonWeight: UIImage.SymbolWeight = .light
-    public static let barButtonIconEdge: CGFloat = 24.0
-    public static let barButtonFullEdge: CGFloat = 44.0
-    public static let barButtonGap: CGFloat = 20.0
-
     // MARK: property
     public var webURL: URL?
     public let webView: WKWebView = WKWebView(frame: .zero)
@@ -51,32 +45,33 @@ open class ACWKWebVC: UIViewController {
         return v
     }()
     public let backwardButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         btn.backgroundColor = .clear
-        let btnImg = UIImage(systemName: "chevron.left", withConfiguration: ACWKWebVC.barButtonImageConfig)
+        let btnImg = ACWKWebVC.imageInCurrentBundle(name: "chevron_left")
+        //btn.tintColor = .systemBlue
         btn.setImage(btnImg, for: .normal)
         btn.isEnabled = false
         return btn
     }()
     public let forwardButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         btn.backgroundColor = .clear
-        let btnImg = UIImage(systemName: "chevron.right", withConfiguration: ACWKWebVC.barButtonImageConfig)
+        let btnImg = ACWKWebVC.imageInCurrentBundle(name: "chevron_right")
         btn.setImage(btnImg, for: .normal)
         btn.isEnabled = false
         return btn
     }()
     public let shareButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         btn.backgroundColor = .clear
-        let btnImg = UIImage(systemName: "square.and.arrow.up", withConfiguration: ACWKWebVC.barButtonImageConfig)
+        let btnImg = ACWKWebVC.imageInCurrentBundle(name: "share")
         btn.setImage(btnImg, for: .normal)
         return btn
     }()
     public let safariButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         btn.backgroundColor = .clear
-        let btnImg = UIImage(systemName: "safari", withConfiguration: ACWKWebVC.barButtonImageConfig)
+        let btnImg = ACWKWebVC.imageInCurrentBundle(name: "safari")
         btn.setImage(btnImg, for: .normal)
         return btn
     }()
@@ -86,14 +81,12 @@ open class ACWKWebVC: UIViewController {
             moreButton.isHidden = (moreButtonEven == nil)
         }
     }
-    private let moreButton: UIButton = {
-        let btn = UIButton(type: .custom)
+    public let moreButton: UIButton = {
+        let btn = UIButton(type: .system)
         btn.backgroundColor = .clear
-        btn.tintColor = .white
         btn.setTitleColor(.white, for: .normal)
         btn.setTitleColor(.gray, for: .highlighted)
-        let biConfig = UIImage.SymbolConfiguration(pointSize: 22.0)
-        let btnImg = UIImage(systemName: "ellipsis", withConfiguration: biConfig)
+        let btnImg = ACWKWebVC.imageInCurrentBundle(name: "more")
         btn.setImage(btnImg, for: .normal)
         btn.isHidden = true
         return btn
@@ -129,9 +122,15 @@ open class ACWKWebVC: UIViewController {
             progressView.setProgress(Float(webView.estimatedProgress), animated: true)
         }
     }
+    
+    // MARK: private
+    private static func imageInCurrentBundle(name: String) -> UIImage? {
+        return UIImage(named: name, in: Bundle.module, compatibleWith: nil)
+    }
 }
 
 // MARK: setup
+
 extension ACWKWebVC {
     private func bindEvent() {
         self.webView.navigationDelegate = self

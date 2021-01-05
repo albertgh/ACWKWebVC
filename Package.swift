@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "ACWKWebVC",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v11)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -23,7 +23,12 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "ACWKWebVC",
-            dependencies: []),
+            dependencies: [],
+            exclude:["Example"],
+            resources: [
+                .process("Resources")
+            ]
+        ),
         .testTarget(
             name: "ACWKWebVCTests",
             dependencies: ["ACWKWebVC"]),

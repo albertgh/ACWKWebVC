@@ -36,8 +36,9 @@ class YourCustomizedWebVC: ACWKWebVC {
         btn.frame = CGRect(x: 0.0, y: 0.0, width: 44.0, height: 44.0)
         btn.backgroundColor = .clear
         //btn.tintColor = .systemBlue
-        let biConfig = UIImage.SymbolConfiguration(pointSize: 24.0)
-        let btnImg = UIImage(systemName: "chevron.down", withConfiguration: biConfig)
+//        let biConfig = UIImage.SymbolConfiguration(pointSize: 24.0)
+//        let btnImg = UIImage(systemName: "chevron.down", withConfiguration: biConfig)
+        let btnImg = UIImage(named: "chevron_down")
         btn.setImage(btnImg, for: .normal)
         return btn
     }()
@@ -87,6 +88,7 @@ extension UIViewController {
         //webVC.overrideUserInterfaceStyle = .dark
         webVC.title = ncTitle
         webVC.progressY = 56.0
+        webVC.moreButton.tintColor = .darkGray
         webVC.moreButtonEven = CommonEvent.webVCMoreEvent(from: webVC)
         webVC.showBottomBar = needBottomToolBar
         let webNC = UINavigationController(rootViewController: webVC)
@@ -94,7 +96,11 @@ extension UIViewController {
         //webNC.overrideUserInterfaceStyle = .dark
         webNC.modalPresentationStyle = .pageSheet
         webNC.modalTransitionStyle = .coverVertical
-        webNC.isModalInPresentation = isModalInPresentation
+        if #available(iOS 13.0, *) {
+            webNC.isModalInPresentation = isModalInPresentation
+        } else {
+            // Fallback on earlier versions
+        }
         present(webNC, animated: true) {
             
         }
