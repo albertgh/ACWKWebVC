@@ -24,6 +24,7 @@ let package = Package(
         .target(
             name: "ACWKWebVC",
             dependencies: [],
+            exclude:["Example"],
             resources: [
                 .process("Resources")
             ]
