@@ -33,7 +33,11 @@ open class ACWKWebVC: UIViewController {
     }
     
     public let bottomBarWrapper: UIVisualEffectView = {
-        let v = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        var effect: UIBlurEffect.Style = .light
+        if #available(iOS 13.0, *) {
+            effect = .regular
+        }
+        let v = UIVisualEffectView(effect: UIBlurEffect(style: effect))
         v.isHidden = true
         return v
     }()
@@ -94,7 +98,11 @@ open class ACWKWebVC: UIViewController {
     
     public func openCurrentWebURLInSafari() {
         guard let url = self.webURL else { return }
-        UIApplication.shared.open(url)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
     }
     
     // MARK: Life Cycle
@@ -183,12 +191,21 @@ extension ACWKWebVC {
         
         view.addSubview(bottomBarWrapper)
         bottomBarWrapper.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            bottomBarWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bottomBarWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomBarWrapper.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -ACWKWebVC.barContentH),
-            bottomBarWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+        if #available(iOS 11.0, *) {
+            NSLayoutConstraint.activate([
+                bottomBarWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                bottomBarWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                bottomBarWrapper.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -ACWKWebVC.barContentH),
+                bottomBarWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                bottomBarWrapper.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                bottomBarWrapper.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                bottomBarWrapper.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                bottomBarWrapper.heightAnchor.constraint(equalToConstant: ACWKWebVC.barContentH)
+            ])
+        }
         bottomBarWrapper.contentView.addSubview(bottomBarContent)
         bottomBarContent.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

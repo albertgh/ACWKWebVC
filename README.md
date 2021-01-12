@@ -38,7 +38,7 @@ There's an example project available to try. Simply open the `ACWKWebVCExample-i
 
 ## Requirements
 
-- iOS 11.0+
+- iOS 9.0+
 - Swift 5.0 or higher
 
 
