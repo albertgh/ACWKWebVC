@@ -32,12 +32,12 @@ class YourCustomizedWebVC: ACWKWebVC {
     // MARK: property
     public var didClose: (() -> Void)?
     public let closeButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         btn.frame = CGRect(x: 0.0, y: 0.0, width: 44.0, height: 44.0)
         btn.backgroundColor = .clear
-        //btn.tintColor = .systemBlue
 //        let biConfig = UIImage.SymbolConfiguration(pointSize: 24.0)
 //        let btnImg = UIImage(systemName: "chevron.down", withConfiguration: biConfig)
+        btn.tintColor = .darkGray
         let btnImg = UIImage(named: "chevron_down")
         btn.setImage(btnImg, for: .normal)
         return btn
@@ -87,7 +87,17 @@ extension UIViewController {
         let webVC: YourCustomizedWebVC = YourCustomizedWebVC(url: url)
         //webVC.overrideUserInterfaceStyle = .dark
         webVC.title = ncTitle
-        webVC.progressY = 56.0
+        if #available(iOS 13.0, *) {
+            webVC.progressY = 56.0
+        } else {
+            var statusH: CGFloat = 20.0
+            if #available(iOS 11, *) {
+                let window = UIApplication.shared.windows[0]
+                let hairHead: CGFloat = window.safeAreaInsets.top
+                statusH = hairHead
+            }
+            webVC.progressY = statusH + 44.0
+        }
         webVC.moreButton.tintColor = .darkGray
         webVC.moreButtonEven = CommonEvent.webVCMoreEvent(from: webVC)
         webVC.showBottomBar = needBottomToolBar
